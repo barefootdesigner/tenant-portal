@@ -2,6 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsController; // keep all 'use' statements together
+use Spatie\Permission\Middleware\RoleMiddleware;
+
+
+Route::get('/news', [NewsController::class, 'publicIndex'])->middleware('auth')->name('tenant.news');
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,5 +22,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::middleware(['auth', RoleMiddleware::class . ':Admin'])->group(function () {
+});
+
+
+
+
 
 require __DIR__.'/auth.php';

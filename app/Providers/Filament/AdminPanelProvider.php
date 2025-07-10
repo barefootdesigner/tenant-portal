@@ -20,6 +20,11 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
+
+
+
+
+    
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -54,6 +59,25 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 \App\Http\Middleware\AdminOnly::class, // This line enables Admin-only access!
-            ]);
+            ])
+
+            ->navigationItems([
+    \Filament\Navigation\NavigationItem::make('News')
+        ->icon('heroicon-o-newspaper')
+        ->url('/admin/news') // 👈 DIRECT URL instead of route()
+        ->sort(20),
+]);
+
+            
     }
+
+
+
+
+
+
+
+
+
+    
 }
