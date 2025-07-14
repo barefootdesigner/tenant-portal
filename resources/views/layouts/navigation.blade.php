@@ -20,6 +20,17 @@
     News
 </x-nav-link>
 
+    <x-nav-link :href="route('offers.index')" :active="request()->routeIs('offers.index')">
+        Offers & Events
+    </x-nav-link>
+
+<x-nav-link :href="route('directory')" :active="request()->routeIs('directory')">
+    {{ __('Business Directory') }}
+</x-nav-link>
+
+<x-nav-link :href="route('tenant.documents.index')" :active="request()->routeIs('tenant.documents.index')">
+    {{ __('Documents') }}
+</x-nav-link>
 
 
                 </div>

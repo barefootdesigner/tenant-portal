@@ -5,9 +5,11 @@
             @forelse($news as $item)
                 <div class="bg-white rounded-xl shadow p-6 flex flex-col">
                     @if($item->image)
+                    <a href="{{ route('news.show', $item) }}">
+
                         <img src="{{ asset('storage/' . $item->image) }}"
                              alt="News image"
-                             class="mb-4 w-full h-48 object-cover rounded-lg">
+                             class="mb-4 w-full h-48 object-cover rounded-lg"></a>
                     @endif
                     <div class="flex-1 flex flex-col">
                         <strong class="block text-xl mb-2">{{ $item->headline }}</strong>

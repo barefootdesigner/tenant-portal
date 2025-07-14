@@ -19,3 +19,22 @@ export default {
 
     plugins: [forms],
 };
+
+
+module.exports = {
+  content: [
+    './resources/**/*.blade.php',
+    './resources/**/*.js',
+    './resources/**/*.vue',
+  ],
+  safelist: [
+    'border-red-500',
+    'border-yellow-500',
+    'border-blue-500',
+    'border-gray-500',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}

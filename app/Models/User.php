@@ -2,52 +2,59 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-
 class User extends Authenticatable
 {
+    use HasFactory, Notifiable, HasRoles;
 
-
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-use HasFactory, Notifiable, HasRoles;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
+        'profile_image', // add this
         'password',
-            'phone', // <-- this line!
+        'phone', // <-- this line!
+        'business_id', // <-- add here!
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    public function business()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsTo(\App\Models\Business::class);
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class, 'user_document');
+    }
+
+    //public function businesses()
+    //{
+    //    return $this->belongsToMany(Business::class); // or your existing business relation
+    //}
+
+    public function businessDocuments()
+    {
+        // Since user has one business, use 'business' relation, not 'businesses'
+        if ($this->business) {
+            return Document::whereHas('businesses', function ($query) {
+                $query->where('id', $this->business->id);
+            });
+        }
+
+        // Return empty query if no business assigned
+        return Document::whereRaw('0=1');
     }
 }

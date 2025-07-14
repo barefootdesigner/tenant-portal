@@ -9,13 +9,27 @@
         </p>
     </header>
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
+    <form id="send-verification" method="post" enctype="multipart/form-data" action="{{ route('verification.send') }}">
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+<form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
+
+        <!-- Add this block wherever you'd like the image upload -->
+    <div class="mt-4">
+        <label for="profile_image" class="block font-medium text-sm text-gray-700">Profile Image</label>
+        @if($user->profile_image)
+            <div class="my-2">
+                <img src="{{ asset('storage/' . $user->profile_image) }}" alt="Profile Image" width="100" class="rounded-full border">
+            </div>
+        @endif
+        <input id="profile_image" name="profile_image" type="file" class="mt-1 block w-full" accept="image/*">
+        @error('profile_image')
+            <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+        @enderror
+    </div>
 
         <div>
             <x-input-label for="name" :value="__('Name')" />

@@ -15,6 +15,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
 use Spatie\Permission\Models\Role;
+use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\ImageColumn;
+
+
 
 
 class UserResource extends Resource
@@ -34,8 +38,21 @@ class UserResource extends Resource
                     ->required()
                     ->email()
                     ->maxLength(255),
+                    FileUpload::make('profile_image')
+    ->label('Profile Photo')
+    ->image()
+    ->imagePreviewHeight('100')
+    ->directory('profile-images')
+    ->disk('public')
+    ->circleCropper() // optional: lets you crop as a circle in admin
+    ->maxSize(2048), // max 2MB
            
-           
+           Select::make('business_id')
+    ->label('Business')
+    ->relationship('business', 'name')
+    ->searchable()
+    ->preload()
+    ->nullable(),
            Select::make('roles')
     ->label('Role')
     ->relationship('roles', 'name')
@@ -65,6 +82,10 @@ class UserResource extends Resource
     {
         return $table
            ->columns([
+            ImageColumn::make('profile_image')
+                ->label('Photo')
+                ->circular()           // makes it a circle
+                ->size(40),            // 40px, adjust as needed
     Tables\Columns\TextColumn::make('name')->searchable(),
     Tables\Columns\TextColumn::make('email')->searchable(),
     Tables\Columns\TextColumn::make('phone')->label('Phone Number'),

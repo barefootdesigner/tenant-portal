@@ -49,10 +49,11 @@ public function store(Request $request)
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+  public function show(\App\Models\News $news)
+{
+    return view('news.show', compact('news'));
+}
+
 
 public function edit(News $news)
 {
