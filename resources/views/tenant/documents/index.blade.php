@@ -1,6 +1,9 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto py-8 px-4">
-        <h1 class="text-2xl font-bold mb-6">Your Documents</h1>
+<div class="flex items-center mb-8">
+    <x-heroicon-o-document class="w-10 h-10 text-white mr-3" />
+    <h1 class="text-3xl font-bold text-white tracking-tight">Documents</h1>
+</div>
 
         @if($documents->isEmpty())
             <p>No documents available.</p>

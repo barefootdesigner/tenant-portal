@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container">
-        <h1>News</h1>
+      
         <a href="{{ route('news.create') }}">Add News</a>
         <ul>
             @forelse($news as $item)

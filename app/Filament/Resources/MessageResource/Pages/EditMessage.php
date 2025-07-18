@@ -17,6 +17,17 @@ class EditMessage extends EditRecord
         ];
     }
 
+public function mount(string|int $record): void
+{
+    parent::mount($record);
+
+    // Mark as read for admin user
+    $admin = auth()->user();
+    $this->record->readers()->syncWithoutDetaching([
+        $admin->id => ['read_at' => now()],
+    ]);
+}
+
 
 // In app/Filament/Resources/MessageResource/Pages/EditMessage.php
 

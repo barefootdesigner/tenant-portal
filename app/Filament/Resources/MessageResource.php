@@ -26,6 +26,9 @@ class MessageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+
+
+
     public static function form(Form $form): Form
     {
          return $form->schema([
@@ -55,41 +58,72 @@ class MessageResource extends Resource
             ->searchable()
             ->label('Send to Business'),
         Toggle::make('is_global')->label('Send to Everyone'),
+    Toggle::make('replies_allowed')
+    ->label('Allow Replies')
+    ->default(true),
+
     ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+        
         ->columns([
-            TextColumn::make('type')
-                ->badge()
-                ->color(fn (string $state): string => match ($state) {
-                    'Issue' => 'danger',
-                    'Parcel' => 'warning',
-                    'Notice' => 'info',
-                    'Alert' => 'gray',
-                    default => 'secondary',
-                }),
-            TextColumn::make('subject')->limit(50)->sortable()->searchable(),
-            TextColumn::make('user.name')->label('User')->sortable()->searchable(),
-            TextColumn::make('business.name')->label('Business')->sortable()->searchable(),
-            IconColumn::make('is_global')
-                ->label('Global')
-                ->boolean(),
-            BadgeColumn::make('status')
-                ->colors([
-                    'primary' => 'Open',
-                    'success' => 'Resolved',
-                    'info' => 'Collected',
-                    'gray' => 'Closed',
-                ])
-                ->sortable(),
-            TextColumn::make('created_at')
-                ->dateTime('d M Y H:i')
-                ->sortable(),
+    TextColumn::make('type')
+        ->badge()
+        ->color(fn (string $state): string => match ($state) {
+            'Issue' => 'danger',
+            'Parcel' => 'warning',
+            'Notice' => 'info',
+            'Alert' => 'gray',
+            default => 'secondary',
+        }),
+    TextColumn::make('subject')->limit(50)->sortable()->searchable(),
+    TextColumn::make('user.name')->label('User')->sortable()->searchable(),
+    TextColumn::make('business.name')->label('Business')->sortable()->searchable(),
+    IconColumn::make('is_global')
+        ->label('Global')
+        ->boolean(),
+
+    // The only NEW badge column
+   BadgeColumn::make('new')
+    ->label('New')
+    ->getStateUsing(function ($record) {
+        $admin = auth()->user();
+        // Safely handle cases where readers is missing or not a collection
+        $readerIds = $record && $record->readers ? $record->readers->pluck('id') : collect();
+        return !$readerIds->contains($admin->id) ? 'NEW' : null;
+    })
+    ->color('success')
+    ->visible(function ($record) {
+        $admin = auth()->user();
+        $readerIds = $record && $record->readers ? $record->readers->pluck('id') : collect();
+        return !$readerIds->contains($admin->id);
+    }),
+
+
+    BadgeColumn::make('status')
+        ->colors([
+            'primary' => 'Open',
+            'success' => 'Resolved',
+            'info' => 'Collected',
+            'gray' => 'Closed',
         ])
-        ->defaultSort('created_at', 'desc');
+
+
+
+
+        
+        ->sortable(),
+    TextColumn::make('created_at')
+        ->dateTime('d M Y H:i')
+        ->sortable(),
+])
+->defaultSort('created_at', 'desc');
+
+
+
     }
 
     public static function getRelations(): array
@@ -102,11 +136,13 @@ class MessageResource extends Resource
     }
 
 
-    public static function getEloquentQuery(): Builder
+public static function getEloquentQuery(): Builder
 {
     return parent::getEloquentQuery()
-        ->whereNull('reply_to_id'); // Show only top-level messages
+        ->with('readers')
+        ->whereNull('reply_to_id');
 }
+
 
 
     public static function getPages(): array

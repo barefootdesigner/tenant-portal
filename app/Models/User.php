@@ -40,6 +40,17 @@ class User extends Authenticatable
         return $this->belongsToMany(Document::class, 'user_document');
     }
 
+public function hiddenMessages()
+{
+    return $this->belongsToMany(
+        \App\Models\Message::class,
+        'hidden_messages', // <--- this matches your migration!
+        'user_id',         // Foreign key on hidden_messages table
+        'message_id'       // Foreign key on hidden_messages table
+    );
+}
+
+
     //public function businesses()
     //{
     //    return $this->belongsToMany(Business::class); // or your existing business relation
@@ -57,4 +68,12 @@ class User extends Authenticatable
         // Return empty query if no business assigned
         return Document::whereRaw('0=1');
     }
+
+    public function readMessages()
+{
+    return $this->belongsToMany(\App\Models\Message::class, 'message_user_reads')
+        ->withPivot('read_at')
+        ->withTimestamps();
+}
+
 }

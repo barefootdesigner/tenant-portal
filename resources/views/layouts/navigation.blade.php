@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-[#193c34] border-b-4 border-[#f08373] text-white shadow-lg">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -6,31 +6,18 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                       <x-application-logo class="block h-9 w-auto fill-current text-white" />
+
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white hover:text-[#f08373] hover:underline font-semibold">
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-<x-nav-link :href="route('tenant.news')" :active="request()->routeIs('tenant.news')">
-    News
-</x-nav-link>
 
-    <x-nav-link :href="route('offers.index')" :active="request()->routeIs('offers.index')">
-        Offers & Events
-    </x-nav-link>
-
-<x-nav-link :href="route('directory')" :active="request()->routeIs('directory')">
-    {{ __('Business Directory') }}
-</x-nav-link>
-
-<x-nav-link :href="route('tenant.documents.index')" :active="request()->routeIs('tenant.documents.index')">
-    {{ __('Documents') }}
-</x-nav-link>
 
 
                 </div>
@@ -84,11 +71,54 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
+       <div class="pt-2 pb-3 space-y-1">
+    <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white hover:text-[#f08373] hover:underline font-semibold">
+        {{ __('Dashboard') }}
+    </x-responsive-nav-link>
+    <x-responsive-nav-link :href="route('tenant.news')" :active="request()->routeIs('tenant.news')" class="text-white hover:text-[#f08373] hover:underline font-semibold">
+        News
+    </x-responsive-nav-link>
+    <x-responsive-nav-link :href="route('offers.index')" :active="request()->routeIs('offers.index')" class="text-white hover:text-[#f08373] hover:underline font-semibold">
+        Offers & Events
+    </x-responsive-nav-link>
+    <x-responsive-nav-link :href="route('directory')" :active="request()->routeIs('directory')" class="text-white hover:text-[#f08373] hover:underline font-semibold">
+        {{ __('Business Directory') }}
+    </x-responsive-nav-link>
+    <x-responsive-nav-link :href="route('tenant.documents.index')" :active="request()->routeIs('tenant.documents.index')" class="text-white hover:text-[#f08373] hover:underline font-semibold">
+        {{ __('Documents') }}
+    </x-responsive-nav-link>
+    <x-responsive-nav-link :href="route('tenant.messages.index')" :active="request()->routeIs('tenant.messages.index')" class="text-white hover:text-[#f08373] hover:underline font-semibold">
+        {{ __('Messages') }}
+    </x-responsive-nav-link>
+    <x-responsive-nav-link :href="route('tenant.messages.create')" :active="request()->routeIs('tenant.messages.create')" class="text-white hover:text-[#f08373] hover:underline font-semibold">
+        {{ __('New Request') }}
+    </x-responsive-nav-link>
+    <x-responsive-nav-link :href="route('tenant.suppliers')" :active="request()->routeIs('tenant.suppliers')" class="text-white hover:text-[#f08373] hover:underline font-semibold">
+        {{ __('Recommended Suppliers') }}
+    </x-responsive-nav-link>
+
+    <x-responsive-nav-link :href="route('tenant.polls.index')" :active="request()->routeIs('tenant.polls.index')" class="text-white hover:text-[#f08373] hover:underline font-semibold">
+    {{ __('Polls') }}
+</x-responsive-nav-link>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
@@ -98,6 +128,14 @@
             </div>
 
             <div class="mt-3 space-y-1">
+
+
+
+
+
+
+
+
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>

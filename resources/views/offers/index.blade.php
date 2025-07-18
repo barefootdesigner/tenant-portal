@@ -1,6 +1,9 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto py-8 px-4">
-        <h1 class="text-2xl font-bold mb-6">Offers & Events</h1>
+<div class="flex items-center mb-8">
+    <x-heroicon-o-gift class="w-10 h-10 text-white mr-3" />
+    <h1 class="text-3xl font-bold text-white tracking-tight">Offers & Events</h1>
+</div>
 
 
 <form method="get" class="mb-6">

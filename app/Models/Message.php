@@ -17,6 +17,8 @@ class Message extends Model
         'message',
         'status',
         'created_by',
+            'replies_allowed',
+
     ];
 
     public function user(): BelongsTo
@@ -38,6 +40,14 @@ class Message extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function readers()
+{
+    return $this->belongsToMany(\App\Models\User::class, 'message_user_reads')
+        ->withPivot('read_at')
+        ->withTimestamps();
+}
+
 
     public function replies()
 {

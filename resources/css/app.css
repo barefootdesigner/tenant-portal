@@ -1,3 +1,117 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* In resources/css/app.css */
+.link-brand {
+    @apply text-[#193c34] hover:text-[#f08373] font-semibold underline;
+}
+
+/* Card grows quickly, as before */
+.bg-white.rounded-xl.shadow.p-6.flex.flex-col.items-start {
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform, box-shadow;
+  cursor: pointer;
+}
+
+/* Card hover effect */
+.bg-white.rounded-xl.shadow.p-6.flex.flex-col.items-start:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.12), 0 1.5px 8px 0 rgba(0,0,0,0.08);
+}
+
+/* Icon animates more slowly with more "easing" */
+svg.w-10.h-10.mb-3 {
+  transition: transform 1.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, filter;
+}
+
+/* On card hover, icon scales up and tilts */
+.bg-white.rounded-xl.shadow.p-6.flex.flex-col.items-start:hover svg.w-10.h-10.mb-3,
+.bg-white.rounded-xl.shadow.p-6.flex.flex-col.items-start:focus-within svg.w-10.h-10.mb-3 {
+  transform: scale(1.28) rotateY(13deg) rotateX(6deg);
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.14));
+}
+
+.dashboard-hero {
+  position: relative;
+    background-image: url('/images/dashboard-bg.jpg');
+    background-size: cover;
+    background-position: center bottom;
+    height: 420px;
+    display: flex;
+    flex-direction: column; /* NEW: allow pushing content to bottom */
+    justify-content: flex-end; /* optional fallback */
+    padding-top: 3rem;
+    padding-bottom: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+        animation: bg-pan 30s ease-in-out infinite alternate;
+
+}
+
+.dashboard-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.dashboard-hero-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+
+    /* NEW: push content to bottom-ish */
+    align-self: flex-end;
+    margin-top: auto;
+    padding-bottom: 2rem; /* controls the gap from bottom edge */
+}
+
+.dashboard-card {
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes bg-pan {
+    0% {
+        background-position: center top;
+    }
+    100% {
+        background-position: center bottom;
+    }
+}
+
+
+/* TEMP TEST: transparent frosty dashboard cards */
+.dashboard-test-outline .bg-white {
+    background-color: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.dashboard-test-outline .bg-white .text-gray-700,
+.dashboard-test-outline .bg-white .text-gray-900,
+.dashboard-test-outline .bg-white .text-gray-500,
+.dashboard-test-outline .bg-white .text-blue-500,
+.dashboard-test-outline .bg-white .text-amber-500,
+.dashboard-test-outline .bg-white .text-purple-500,
+.dashboard-test-outline .bg-white .text-pink-500,
+.dashboard-test-outline .bg-white .text-teal-500,
+.dashboard-test-outline .bg-white .text-gray-700,
+.dashboard-test-outline .bg-white .text-green-600,
+.dashboard-test-outline .bg-white .text-red-500,
+.dashboard-test-outline .bg-white a {
+    color: white !important;
+}
+

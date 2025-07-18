@@ -1,6 +1,14 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto py-8 px-4">
-        <h1 class="text-2xl font-bold mb-6">Business Directory</h1>
+
+
+<div class="flex items-center mb-8">
+    <x-heroicon-o-building-office class="w-10 h-10 text-white mr-3 drop-shadow-lg" />
+    <h1 class="text-3xl font-bold text-white tracking-tight">Business Directory</h1>
+</div>
+
+
+
 
 <form method="GET" action="{{ route('directory') }}" class="mb-4">
     <input 

@@ -1,6 +1,9 @@
 <x-app-layout>
 <div class="max-w-7xl mx-auto py-8 px-4">
-        <h1 class="text-2xl font-bold mb-6">Latest News</h1>
+<div class="flex items-center mb-8">
+    <x-heroicon-o-megaphone class="w-10 h-10 text-white mr-3" />
+    <h1 class="text-3xl font-bold text-white tracking-tight">News & Announcements</h1>
+</div>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($news as $item)
                 <div class="bg-white rounded-xl shadow p-6 flex flex-col">
